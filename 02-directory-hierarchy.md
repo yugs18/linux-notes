@@ -133,3 +133,20 @@ Used by administrators to manually mount filesystems.
 Contains data served by system services.
 Example:
 - Web server files
+
+## /sys – System & Hardware Information
+
+A virtual filesystem that provides structured information about:
+
+- Hardware devices
+- Drivers
+- Kernel subsystems
+
+It is created dynamically by the kernel at runtime.
+
+Unlike regular files, these are interfaces to kernel data.
+
+Examples:
+- /sys/class → Device classes
+- /sys/devices → Hardware devices
+- /sys/kernel → Kernel information
