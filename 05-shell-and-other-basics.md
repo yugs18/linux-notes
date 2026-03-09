@@ -282,3 +282,431 @@ Another documentation system used by some programs.
 ```
 
 ---
+---
+
+# Environment Variables in Linux
+
+Environment variables are dynamic values that affect the behavior of processes and programs running on a system.
+
+Variables in Linux are generally classified into two types:
+
+- **Environment Variables**
+- **Shell Variables**
+
+---
+
+# Variable Syntax
+
+Variables are defined using the following syntax:
+
+```
+KEY=value
+KEY="Some other value"
+KEY=value1:value2
+```
+
+Important rules:
+
+- Variable names are **case-sensitive**
+- By convention, environment variables are **UPPERCASE**
+- **No spaces** are allowed around `=`
+- Multiple values are separated using `:`
+
+Example:
+
+```
+PATH=/usr/local/bin:/usr/bin:/bin
+```
+
+---
+
+# Types of Variables
+
+## Environment Variables
+
+Environment variables:
+
+- Are **available system-wide**
+- Are **inherited by child processes**
+- Affect how programs behave
+
+Examples:
+
+- `PATH`
+- `HOME`
+- `USER`
+- `LANG`
+
+---
+
+## Shell Variables
+
+Shell variables:
+
+- Exist **only in the current shell**
+- Are **not inherited by child processes**
+- Are used internally by the shell
+
+Each shell (bash, zsh, etc.) has its own set of variables.
+
+---
+
+# Commands for Working with Variables
+
+Several commands help manage environment variables:
+
+| Command | Description |
+|-------|-------------|
+| `env` | Run programs in a modified environment or display variables |
+| `printenv` | Print environment variables |
+| `set` | Show all variables and shell functions |
+| `unset` | Remove a variable |
+| `export` | Convert a shell variable to an environment variable |
+
+---
+
+# Listing Environment Variables
+
+The most common command is:
+
+```
+printenv
+```
+
+Example output:
+
+```
+SHELL=/bin/bash
+USER=linuxize
+HOME=/home/linuxize
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+TERM=xterm-256color
+```
+
+---
+
+## Display a Specific Variable
+
+```
+printenv HOME
+```
+
+Output:
+
+```
+/home/linuxize
+```
+
+Multiple variables:
+
+```
+printenv LANG PWD
+```
+
+---
+
+# Using the env Command
+
+```
+env
+```
+
+Displays all environment variables.
+
+---
+
+# Using the set Command
+
+```
+set
+```
+
+Displays:
+
+- environment variables
+- shell variables
+- shell functions
+
+Because output is large, use:
+
+```
+set | less
+```
+
+---
+
+# Printing Variables with echo
+
+You can display variables using:
+
+```
+echo $VARIABLE_NAME
+```
+
+Example:
+
+```
+echo $BASH_VERSION
+```
+
+Output:
+
+```
+5.2.21(1)-release
+```
+
+---
+
+# Setting Variables
+
+## Creating a Shell Variable
+
+```
+MY_VAR="Linux"
+```
+
+Check it:
+
+```
+echo $MY_VAR
+```
+
+Output:
+
+```
+Linux
+```
+
+However this variable is **not an environment variable**.
+
+Verify with:
+
+```
+printenv MY_VAR
+```
+
+(no output)
+
+---
+
+# Exporting Environment Variables
+
+Convert a shell variable to an environment variable:
+
+```
+export MY_VAR
+```
+
+Now it becomes available to child processes.
+
+Verify:
+
+```
+printenv MY_VAR
+```
+
+Output:
+
+```
+Linux
+```
+
+---
+
+## Set Environment Variable in One Command
+
+```
+export MY_NEW_VAR="My New Variable"
+```
+
+---
+
+# Variables in Child Shells
+
+Without export:
+
+```
+bash -c 'echo $MY_VAR'
+```
+
+Output:
+
+(empty)
+
+With export:
+
+```
+export MY_VAR
+bash -c 'echo $MY_VAR'
+```
+
+Output:
+
+```
+Linux
+```
+
+---
+
+# Setting Variable for a Single Command
+
+You can assign a variable only for a specific command:
+
+```
+DEBUG=1 myapp --verbose
+```
+
+The variable exists only during that command execution.
+
+---
+
+# Removing Variables
+
+Use `unset`:
+
+```
+unset MY_VAR
+```
+
+Verify removal:
+
+```
+echo $MY_VAR
+```
+
+Output:
+
+(empty)
+
+---
+
+# Persistent Environment Variables
+
+To make variables permanent, add them to configuration files.
+
+---
+
+## System-wide Variables
+
+```
+/etc/environment
+```
+
+Example:
+
+```
+FOO=bar
+TEST_VAR="Example"
+```
+
+This file **does not support `export`**.
+
+---
+
+## System-wide Shell Configuration
+
+```
+/etc/profile
+```
+
+Example:
+
+```
+export JAVA_HOME="/path/to/java"
+export PATH=$PATH:$JAVA_HOME/bin
+```
+
+---
+
+## User-specific Configuration
+
+For Bash users:
+
+```
+~/.bashrc
+```
+
+Example:
+
+```
+export PATH="$HOME/bin:$PATH"
+```
+
+For Zsh users:
+
+```
+~/.zshrc
+```
+
+---
+
+## Additional System Scripts
+
+```
+/etc/profile.d/*.sh
+```
+
+Used for application-specific environment variables.
+
+---
+
+# Understanding Shell Startup Files
+
+Different configuration files load depending on shell type.
+
+### Login Shell
+
+Loaded when logging in via SSH or console:
+
+```
+~/.bash_profile
+~/.profile
+```
+
+---
+
+### Interactive Shell
+
+Loaded when opening a new terminal:
+
+```
+~/.bashrc
+```
+
+---
+
+### Zsh Shell
+
+```
+~/.zshrc
+```
+
+---
+
+# Apply Changes Immediately
+
+After editing configuration files, reload them:
+
+```
+source ~/.bashrc
+```
+
+---
+
+# Quick Reference
+
+| Task | Command |
+|----|----|
+| List environment variables | `printenv` or `env` |
+| Print specific variable | `echo $HOME` |
+| Create shell variable | `MY_VAR=value` |
+| Create environment variable | `export MY_VAR=value` |
+| Remove variable | `unset MY_VAR` |
+| Add directory to PATH | `export PATH="$HOME/bin:$PATH"` |
+| Show all variables | `set` |
+| Reload config | `source ~/.bashrc` |
+
+---
+---
+
+
