@@ -1061,5 +1061,132 @@ This gives you a temporary root session.
 | `sudo -i`      | Start root shell                   |
 
 ---
+
+---
+
+---
+
+# Creating Links
+
+## Create a Hard Link
+
+```
+ln original_file hardlink_name
+```
+
+Example:
+
+```
+ln file.txt file_hardlink.txt
+```
+
+Both files point to the **same inode**.
+
+## Create a Soft (Symbolic) Link
+
+```
+ln -s target link_name
+```
+
+Example:
+
+```
+ln -s file.txt file_symlink.txt
+```
+
+This creates a **symbolic link pointing to the original file**.
+
+# How PATH Works
+
+When you run a command, the shell searches the directories listed in `$PATH` **from left to right**.
+
+Example PATH:
+
+```
+/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+```
+
+The shell checks each directory in order until it finds the executable. The first match is executed.
+
+# The tee Command
+
+The `tee` command reads from standard input and writes output to both the terminal and a file.
+
+Example:
+
+```
+ls | tee output.txt
+```
+
+This shows the output on screen and also saves it to `output.txt`.
+
+# Redirect Both Output and Errors (Shortcut)
+
+```
+command &> file
+```
+
+Example:
+
+```
+ls /home /fake &> output.txt
+```
+
+This redirects **both stdout and stderr** to the same file.
+
+# Aliases
+
+Aliases allow you to create shortcuts for commands.
+
+Example:
+
+```
+alias ll="ls -la"
+```
+
+Now running:
+
+```
+ll
+```
+
+is equivalent to running:
+
+```
+ls -la
+```
+
+To remove an alias:
+
+```
+unalias ll
+```
+
+# Command History
+
+The shell stores previously executed commands.
+
+View history:
+
+```
+history
+```
+
+Run a command from history:
+
+```
+!number
+```
+
+Example:
+
+```
+!45
+```
+
+This runs the 45th command from history.
+
+Run the 45th command from history.
+
 ---
 ---
